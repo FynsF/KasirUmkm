@@ -436,27 +436,32 @@
         font-size: 0.8rem;
       }
 
+      /* Perbaikan untuk cetak struk */
       @media print {
-        .modal {
-          display: block !important;
-        }
         body * {
           visibility: hidden;
         }
-        .receipt,
-        .receipt * {
+        #receipt-print, #receipt-print * {
           visibility: visible;
         }
-        .receipt {
+        #receipt-print {
           position: absolute;
           left: 0;
           top: 0;
           width: 100%;
           max-width: 100%;
           border: none;
+          padding: 0;
+          margin: 0;
+          background: white;
         }
         .no-print {
           display: none !important;
+        }
+        .receipt {
+          max-width: 100%;
+          box-shadow: none;
+          border: none;
         }
       }
 
@@ -778,61 +783,66 @@
           <span class="close" onclick="closeReceiptModal()">&times;</span>
         </div>
 
-        <div class="receipt no-print">
-          <div class="receipt-header">
-            <h2>Toko UMKM FYN</h2>
-            <p>Jl. Gatot Subroto No. 12, Medan</p>
-            <p>Telp: 081269441924</p>
-            <p id="receipt-date">Tanggal:</p>
-            <p id="receipt-transaction">No. Transaksi:</p>
-          </div>
+        <div id="receipt-print">
+          <div class="receipt">
+            <div class="receipt-header">
+              <h2>Toko UMKM FYN</h2>
+              <p>Jl. Gatot Subroto No. 12, Medan</p>
+              <p>Telp: 081269441924</p>
+              <p id="receipt-date">Tanggal:</p>
+              <p id="receipt-transaction">No. Transaksi:</p>
+              <p id="receipt-customer">Pelanggan: -</p>
+            </div>
 
-          <div class="receipt-body">
-            <table id="receipt-items">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Qty</th>
-                  <th>Harga</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Items akan dimasukkan di sini oleh JavaScript -->
-              </tbody>
-            </table>
-          </div>
+            <div class="receipt-body">
+              <table id="receipt-items">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Harga</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Items akan dimasukkan di sini oleh JavaScript -->
+                </tbody>
+              </table>
+            </div>
 
-          <div class="receipt-footer">
-            <div class="total-row">
-              <span>Subtotal:</span>
-              <span id="receipt-subtotal">Rp 0</span>
+            <div class="receipt-footer">
+              <div class="total-row">
+                <span>Subtotal:</span>
+                <span id="receipt-subtotal">Rp 0</span>
+              </div>
+              <div class="total-row">
+                <span>Diskon:</span>
+                <span id="receipt-diskon">Rp 0</span>
+              </div>
+              <div class="total-row">
+                <span>Pajak (10%):</span>
+                <span id="receipt-pajak">Rp 0</span>
+              </div>
+              <div class="total-row">
+                <span>Total:</span>
+                <span id="receipt-total">Rp 0</span>
+              </div>
+              <div class="total-row">
+                <span>Tunai:</span>
+                <span id="receipt-paid">Rp 0</span>
+              </div>
+              <div class="total-row">
+                <span>Kembali:</span>
+                <span id="receipt-change">Rp 0</span>
+              </div>
+              <div class="total-row">
+                <span>Metode:</span>
+                <span id="receipt-method">Tunai</span>
+              </div>
+              <p>--------------------------------</p>
+              <p>Terima kasih telah berbelanja</p>
+              <p>Barang yang sudah dibeli tidak dapat ditukar/dikembalikan</p>
             </div>
-            <div class="total-row">
-              <span>Diskon:</span>
-              <span id="receipt-diskon">Rp 0</span>
-            </div>
-            <div class="total-row">
-              <span>Pajak (10%):</span>
-              <span id="receipt-pajak">Rp 0</span>
-            </div>
-            <div class="total-row">
-              <span>Total:</span>
-              <span id="receipt-total">Rp 0</span>
-            </div>
-            <div class="total-row">
-              <span>Tunai:</span>
-              <span id="receipt-paid">Rp 0</span>
-            </div>
-            <div class="total-row">
-              <span>Kembali:</span>
-              <span id="receipt-change">Rp 0</span>
-            </div>
-            <div class="total-row">
-              <span>Metode:</span>
-              <span id="receipt-method">Tunai</span>
-            </div>
-            <p>Terima kasih telah berbelanja</p>
-            <p>Barang yang sudah dibeli tidak dapat ditukar/dikembalikan</p>
           </div>
         </div>
 
@@ -1393,16 +1403,21 @@
         document.getElementById(
           "receipt-transaction"
         ).textContent = `No. Transaksi: ${transaction.id}`;
+        document.getElementById(
+          "receipt-customer"
+        ).textContent = `Pelanggan: ${transaction.customerName || "-"}`;
 
         // Set items
         const receiptItems = document.querySelector("#receipt-items tbody");
         receiptItems.innerHTML = "";
         transaction.items.forEach((item) => {
+          const subtotal = item.harga * item.qty;
           receiptItems.innerHTML += `
           <tr>
             <td>${item.nama}</td>
             <td>${item.qty}</td>
             <td>Rp ${formatNumber(item.harga)}</td>
+            <td>Rp ${formatNumber(subtotal)}</td>
           </tr>
         `;
         });
@@ -1414,6 +1429,9 @@
         document.getElementById(
           "receipt-diskon"
         ).textContent = `Rp ${formatNumber(transaction.diskon)}`;
+        document.getElementById(
+          "receipt-pajak"
+        ).textContent = `Rp ${formatNumber(transaction.pajak)}`;
         document.getElementById(
           "receipt-total"
         ).textContent = `Rp ${formatNumber(transaction.total)}`;
@@ -1463,26 +1481,16 @@
 
       // Fungsi Cetak Struk
       function printReceipt() {
-        const receiptContent = document.getElementById("receipt").innerHTML;
-        const printWindow = window.open("", "", "width=400,height=600");
-        printWindow.document.write(`
-    <html>
-      <head>
-        <title>Struk Pembayaran</title>
-        <style>
-          body { font-family: monospace; padding: 10px; }
-          .center { text-align: center; }
-          table { width: 100%; border-collapse: collapse; }
-          td, th { padding: 4px; border-bottom: 1px dashed #000; text-align: left; }
-          .total { font-weight: bold; }
-        </style>
-      </head>
-      <body onload="window.print(); window.close();">
-        ${receiptContent}
-      </body>
-    </html>
-  `);
-        printWindow.document.close();
+        const printContents = document.getElementById("receipt-print").innerHTML;
+        const originalContents = document.body.innerHTML;
+        
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        
+        // Render ulang setelah cetak
+        renderKeranjang();
+        renderDaftarProduk();
       }
 
       // Fungsi Format Angka
