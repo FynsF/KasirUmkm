@@ -1463,12 +1463,26 @@
 
       // Fungsi Cetak Struk
       function printReceipt() {
-        const modal = document.getElementById("receiptModal");
-        modal.style.display = "block"; // tampilkan dulu modalnya
-
-        setTimeout(() => {
-          window.print();
-        }, 500); // beri waktu render sebelum cetak
+        const receiptContent = document.getElementById("receipt").innerHTML;
+        const printWindow = window.open("", "", "width=400,height=600");
+        printWindow.document.write(`
+    <html>
+      <head>
+        <title>Struk Pembayaran</title>
+        <style>
+          body { font-family: monospace; padding: 10px; }
+          .center { text-align: center; }
+          table { width: 100%; border-collapse: collapse; }
+          td, th { padding: 4px; border-bottom: 1px dashed #000; text-align: left; }
+          .total { font-weight: bold; }
+        </style>
+      </head>
+      <body onload="window.print(); window.close();">
+        ${receiptContent}
+      </body>
+    </html>
+  `);
+        printWindow.document.close();
       }
 
       // Fungsi Format Angka
