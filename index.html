@@ -441,7 +441,8 @@
         body * {
           visibility: hidden;
         }
-        #receipt-print, #receipt-print * {
+        #receipt-print,
+        #receipt-print * {
           visibility: visible;
         }
         #receipt-print {
@@ -1403,9 +1404,9 @@
         document.getElementById(
           "receipt-transaction"
         ).textContent = `No. Transaksi: ${transaction.id}`;
-        document.getElementById(
-          "receipt-customer"
-        ).textContent = `Pelanggan: ${transaction.customerName || "-"}`;
+        document.getElementById("receipt-customer").textContent = `Pelanggan: ${
+          transaction.customerName || "-"
+        }`;
 
         // Set items
         const receiptItems = document.querySelector("#receipt-items tbody");
@@ -1479,18 +1480,34 @@
         document.getElementById("receiptModal").style.display = "none";
       }
 
-      // Fungsi Cetak Struk
       function printReceipt() {
-        const printContents = document.getElementById("receipt-print").innerHTML;
-        const originalContents = document.body.innerHTML;
-        
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        
-        // Render ulang setelah cetak
-        renderKeranjang();
-        renderDaftarProduk();
+        const receiptElement = document.getElementById("receipt-print");
+        if (!receiptElement) {
+          alert("Struk tidak ditemukan!");
+          return;
+        }
+
+        const printWindow = window.open("", "", "width=600,height=800");
+        printWindow.document.write(`
+    <html>
+      <head>
+        <title>Struk Pembayaran</title>
+        <style>
+          body { font-family: monospace; padding: 20px; }
+          table { width: 100%; border-collapse: collapse; }
+          td, th { padding: 4px; border-bottom: 1px dashed #000; text-align: left; }
+        </style>
+      </head>
+      <body>
+        ${receiptElement.innerHTML}
+      </body>
+    </html>
+  `);
+        printWindow.document.close();
+
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
       }
 
       // Fungsi Format Angka
