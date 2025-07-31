@@ -21,6 +21,7 @@
         --warning-color: #f39c12;
         --light-color: #ecf0f1;
         --dark-color: #2c3e50;
+        --info-color: #17a2b8;
       }
 
       body {
@@ -29,6 +30,7 @@
         padding: 0;
         background: #f5f7fa;
         color: #333;
+        line-height: 1.6;
       }
 
       header {
@@ -37,6 +39,16 @@
         padding: 1rem;
         text-align: center;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .header-controls {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        gap: 10px;
       }
 
       .container {
@@ -72,6 +84,9 @@
         font-weight: 600;
         color: var(--primary-color);
         margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       #reader {
@@ -138,7 +153,10 @@
       }
 
       .btn {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         padding: 10px 15px;
         border: none;
         border-radius: 4px;
@@ -147,6 +165,11 @@
         cursor: pointer;
         transition: all 0.3s;
         text-align: center;
+      }
+
+      .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.8rem;
       }
 
       .btn-primary {
@@ -185,6 +208,15 @@
         background: #d35400;
       }
 
+      .btn-info {
+        background: var(--info-color);
+        color: white;
+      }
+
+      .btn-info:hover {
+        background: #138496;
+      }
+
       .btn-block {
         display: block;
         width: 100%;
@@ -199,14 +231,26 @@
       }
 
       .badge {
-        display: inline-block;
-        padding: 3px 7px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        height: 24px;
+        padding: 0 6px;
         font-size: 0.75rem;
         font-weight: 600;
         line-height: 1;
         color: white;
         background: var(--secondary-color);
-        border-radius: 10px;
+        border-radius: 12px;
+      }
+
+      .badge-danger {
+        background: var(--danger-color);
+      }
+
+      .badge-warning {
+        background: var(--warning-color);
       }
 
       .action-btn {
@@ -217,10 +261,16 @@
         font-size: 1rem;
         margin: 0 5px;
         transition: color 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
       }
 
       .action-btn:hover {
-        color: var(--primary-color);
+        background-color: rgba(52, 152, 219, 0.1);
       }
 
       .action-btn.delete {
@@ -228,7 +278,15 @@
       }
 
       .action-btn.delete:hover {
-        color: #c0392b;
+        background-color: rgba(231, 76, 60, 0.1);
+      }
+
+      .action-btn.edit {
+        color: var(--warning-color);
+      }
+
+      .action-btn.edit:hover {
+        background-color: rgba(243, 156, 18, 0.1);
       }
 
       .total-section {
@@ -323,6 +381,7 @@
         font-size: 28px;
         font-weight: bold;
         cursor: pointer;
+        transition: color 0.3s;
       }
 
       .close:hover {
@@ -434,6 +493,138 @@
         .receipt {
           width: 100%;
         }
+
+        .header-controls {
+          position: static;
+          transform: none;
+          justify-content: center;
+          margin-top: 10px;
+        }
+      }
+
+      /* TAB NAVIGATION */
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+        margin-right: 5px;
+        transition: all 0.3s;
+      }
+
+      .tab.active {
+        border-color: #ddd;
+        border-bottom-color: #fff;
+        background: #fff;
+        color: var(--secondary-color);
+        font-weight: 600;
+      }
+
+      .tab:hover:not(.active) {
+        background: #f5f5f5;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* STOCK WARNING */
+      .low-stock {
+        color: var(--danger-color);
+        font-weight: 600;
+      }
+
+      /* LOADING SPINNER */
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: var(--secondary-color);
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* CUSTOM SCROLLBAR */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2980b9;
+      }
+
+      /* TOOLTIP */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.3s ease-in;
       }
     </style>
   </head>
@@ -442,6 +633,14 @@
       <h1>
         <i class="fas fa-cash-register"></i> APLIKASI KASIR UMKM PROFESIONAL
       </h1>
+      <div class="header-controls">
+        <button class="btn btn-sm btn-info" onclick="showTransactionHistory()">
+          <i class="fas fa-history"></i> Riwayat
+        </button>
+        <button class="btn btn-sm btn-warning" onclick="backupData()">
+          <i class="fas fa-database"></i> Backup
+        </button>
+      </div>
     </header>
 
     <div class="container">
@@ -611,20 +810,68 @@
           />
         </div>
 
-        <table id="produk-table">
-          <thead>
-            <tr>
-              <th>Barcode</th>
-              <th>Nama Produk</th>
-              <th>Harga</th>
-              <th>Stok</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="produk-body">
-            <!-- Produk akan dimasukkan di sini oleh JavaScript -->
-          </tbody>
-        </table>
+        <div class="tabs">
+          <div class="tab active" onclick="changeTab('all-products')">
+            Semua Produk
+          </div>
+          <div class="tab" onclick="changeTab('low-stock')">
+            Stok Rendah
+          </div>
+          <div class="tab" onclick="changeTab('out-of-stock')">
+            Stok Habis
+          </div>
+        </div>
+
+        <div id="all-products" class="tab-content active">
+          <table id="produk-table">
+            <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="produk-body">
+              <!-- Produk akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="low-stock" class="tab-content">
+          <table id="low-stock-table">
+            <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="low-stock-body">
+              <!-- Produk stok rendah akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="out-of-stock" class="tab-content">
+          <table id="out-of-stock-table">
+            <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="out-of-stock-body">
+              <!-- Produk stok habis akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -694,11 +941,12 @@
 
         <div id="receipt-print" class="receipt" style="display: none">
           <div class="receipt-header">
-            <h2>Toko UMKM FYN</h2>
-            <p>Jl. Gatot Subroto No. 12, Medan</p>
-            <p>Telp: 081269441924</p>
+            <h2 id="receipt-store-name">Toko UMKM FYN</h2>
+            <p id="receipt-store-address">Jl. Gatot Subroto No. 12, Medan</p>
+            <p id="receipt-store-phone">Telp: 081269441924</p>
             <p id="receipt-date">Tanggal:</p>
             <p id="receipt-transaction">No. Transaksi:</p>
+            <p id="receipt-customer">Pelanggan: -</p>
           </div>
 
           <div class="receipt-body">
@@ -749,6 +997,7 @@
             <p>--------------------------------</p>
             <p>Terima kasih telah berbelanja</p>
             <p>Barang yang sudah dibeli tidak dapat ditukar/dikembalikan</p>
+            <p id="receipt-cashier">Kasir: Admin</p>
           </div>
         </div>
 
@@ -768,55 +1017,343 @@
       </div>
     </div>
 
+    <!-- Modal Tambah Produk -->
+    <div id="addProductModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2><i class="fas fa-box"></i> Tambah Produk Baru</h2>
+          <span class="close" onclick="closeAddProductModal()">&times;</span>
+        </div>
+
+        <div class="form-group">
+          <label for="new-barcode">Barcode:</label>
+          <input
+            type="text"
+            id="new-barcode"
+            class="form-control"
+            placeholder="Masukkan kode barcode"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="new-nama">Nama Produk:</label>
+          <input
+            type="text"
+            id="new-nama"
+            class="form-control"
+            placeholder="Masukkan nama produk"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="new-harga">Harga (Rp):</label>
+          <input
+            type="number"
+            id="new-harga"
+            class="form-control"
+            placeholder="Masukkan harga"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="new-stok">Stok:</label>
+          <input
+            type="number"
+            id="new-stok"
+            class="form-control"
+            placeholder="Masukkan jumlah stok"
+            value="1"
+          />
+        </div>
+
+        <button class="btn btn-success btn-block" onclick="tambahProdukBaru()">
+          <i class="fas fa-save"></i> Simpan Produk
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Riwayat Transaksi -->
+    <div id="historyModal" class="modal">
+      <div class="modal-content" style="max-width: 800px">
+        <div class="modal-header">
+          <h2><i class="fas fa-history"></i> Riwayat Transaksi</h2>
+          <span class="close" onclick="closeHistoryModal()">&times;</span>
+        </div>
+
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="search-history"
+            class="form-control"
+            placeholder="Cari transaksi..."
+          />
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" onclick="changeHistoryTab('all-history')">
+            Semua Transaksi
+          </div>
+          <div class="tab" onclick="changeHistoryTab('today-history')">
+            Hari Ini
+          </div>
+        </div>
+
+        <div id="all-history" class="tab-content active">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>No. Transaksi</th>
+                <th>Tanggal</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Metode</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="history-body">
+              <!-- Riwayat transaksi akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="today-history" class="tab-content">
+          <table id="today-history-table">
+            <thead>
+              <tr>
+                <th>No. Transaksi</th>
+                <th>Waktu</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Metode</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="today-history-body">
+              <!-- Riwayat transaksi hari ini akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="total-section" style="margin-top: 20px">
+          <div class="total-row">
+            <span>Total Transaksi:</span>
+            <span id="total-transactions">0</span>
+          </div>
+          <div class="total-row">
+            <span>Total Pendapatan:</span>
+            <span id="total-income">Rp 0</span>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-danger btn-block no-print"
+          onclick="closeHistoryModal()"
+          style="margin-top: 20px"
+        >
+          <i class="fas fa-times"></i> Tutup
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Backup Data -->
+    <div id="backupModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2><i class="fas fa-database"></i> Backup & Restore Data</h2>
+          <span class="close" onclick="closeBackupModal()">&times;</span>
+        </div>
+
+        <div class="form-group">
+          <h3><i class="fas fa-download"></i> Backup Data</h3>
+          <p>Ekspor semua data ke file JSON untuk cadangan.</p>
+          <button class="btn btn-primary btn-block" onclick="exportData()">
+            <i class="fas fa-file-export"></i> Ekspor Data
+          </button>
+        </div>
+
+        <div class="form-group" style="margin-top: 20px">
+          <h3><i class="fas fa-upload"></i> Restore Data</h3>
+          <p>Impor data dari file JSON backup sebelumnya.</p>
+          <input
+            type="file"
+            id="import-file"
+            class="form-control"
+            accept=".json"
+            style="margin-bottom: 10px"
+          />
+          <button class="btn btn-warning btn-block" onclick="importData()">
+            <i class="fas fa-file-import"></i> Impor Data
+          </button>
+        </div>
+
+        <div class="form-group" style="margin-top: 20px">
+          <h3><i class="fas fa-trash-alt"></i> Reset Data</h3>
+          <p>Hapus semua data dan reset aplikasi ke kondisi awal.</p>
+          <button class="btn btn-danger btn-block" onclick="confirmResetData()">
+            <i class="fas fa-exclamation-triangle"></i> Reset Semua Data
+          </button>
+        </div>
+
+        <button
+          class="btn btn-secondary btn-block no-print"
+          onclick="closeBackupModal()"
+          style="margin-top: 20px"
+        >
+          <i class="fas fa-times"></i> Tutup
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div id="confirmModal" class="modal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h2 id="confirm-title"><i class="fas fa-exclamation-circle"></i> Konfirmasi</h2>
+          <span class="close" onclick="closeConfirmModal()">&times;</span>
+        </div>
+
+        <div class="form-group">
+          <p id="confirm-message">Apakah Anda yakin ingin melakukan tindakan ini?</p>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px">
+          <button class="btn btn-danger" style="flex: 1" onclick="confirmAction(false)">
+            <i class="fas fa-times"></i> Batal
+          </button>
+          <button class="btn btn-success" style="flex: 1" onclick="confirmAction(true)">
+            <i class="fas fa-check"></i> Ya
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Detail Transaksi -->
+    <div id="detailModal" class="modal">
+      <div class="modal-content" style="max-width: 600px">
+        <div class="modal-header">
+          <h2><i class="fas fa-receipt"></i> Detail Transaksi</h2>
+          <span class="close" onclick="closeDetailModal()">&times;</span>
+        </div>
+
+        <div class="form-group">
+          <p><strong>No. Transaksi:</strong> <span id="detail-id"></span></p>
+          <p><strong>Tanggal:</strong> <span id="detail-date"></span></p>
+          <p><strong>Pelanggan:</strong> <span id="detail-customer"></span></p>
+          <p><strong>Metode Pembayaran:</strong> <span id="detail-method"></span></p>
+        </div>
+
+        <table style="width: 100%; margin-top: 15px">
+          <thead>
+            <tr>
+              <th>Produk</th>
+              <th>Qty</th>
+              <th>Harga</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="detail-items">
+            <!-- Items transaksi akan dimasukkan di sini oleh JavaScript -->
+          </tbody>
+        </table>
+
+        <div class="total-section" style="margin-top: 15px">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span id="detail-subtotal">Rp 0</span>
+          </div>
+          <div class="total-row">
+            <span>Diskon:</span>
+            <span id="detail-diskon">Rp 0</span>
+          </div>
+          <div class="total-row">
+            <span>Pajak (10%):</span>
+            <span id="detail-pajak">Rp 0</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Total:</span>
+            <span id="detail-total">Rp 0</span>
+          </div>
+          <div class="total-row">
+            <span>Dibayar:</span>
+            <span id="detail-paid">Rp 0</span>
+          </div>
+          <div class="total-row">
+            <span>Kembali:</span>
+            <span id="detail-change">Rp 0</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px">
+          <button class="btn btn-primary" style="flex: 1" onclick="printDetailReceipt()">
+            <i class="fas fa-print"></i> Cetak Ulang
+          </button>
+          <button class="btn btn-secondary" style="flex: 1" onclick="closeDetailModal()">
+            <i class="fas fa-times"></i> Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       // Data Aplikasi
       let daftarProduk = JSON.parse(localStorage.getItem("produkUMKM")) || [];
       let keranjang = JSON.parse(localStorage.getItem("keranjangUMKM")) || [];
-      let transactions =
-        JSON.parse(localStorage.getItem("transaksiUMKM")) || [];
+      let transactions = JSON.parse(localStorage.getItem("transaksiUMKM")) || [];
+      let storeInfo = JSON.parse(localStorage.getItem("storeInfoUMKM")) || {
+        name: "Toko UMKM FYN",
+        address: "Jl. Gatot Subroto No. 12, Medan",
+        phone: "081269441924",
+        cashier: "Admin"
+      };
       let scanner = null;
+      let currentTransaction = null;
 
       // Inisialisasi Aplikasi
       document.addEventListener("DOMContentLoaded", function () {
         initScanner();
         renderKeranjang();
         renderDaftarProduk();
+        renderStoreInfo();
 
         // Event listener untuk input barcode manual
-        document
-          .getElementById("manual-barcode")
-          .addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-              cariProdukManual();
-            }
-          });
+        document.getElementById("manual-barcode").addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            cariProdukManual();
+          }
+        });
 
         // Event listener untuk tombol cari
-        document
-          .getElementById("btn-cari")
-          .addEventListener("click", cariProdukManual);
+        document.getElementById("btn-cari").addEventListener("click", cariProdukManual);
 
         // Event listener untuk pencarian produk
-        document
-          .getElementById("search-product")
-          .addEventListener("input", function () {
-            renderDaftarProduk(this.value.toLowerCase());
-          });
+        document.getElementById("search-product").addEventListener("input", function () {
+          renderDaftarProduk(this.value.toLowerCase());
+        });
 
         // Event listener untuk input diskon
-        document
-          .getElementById("diskon-input")
-          .addEventListener("input", function () {
-            updateTotal();
-          });
+        document.getElementById("diskon-input").addEventListener("input", function () {
+          updateTotal();
+        });
 
         // Event listener untuk jumlah pembayaran
-        document
-          .getElementById("amount-paid")
-          .addEventListener("input", function () {
-            calculateChange();
-          });
+        document.getElementById("amount-paid").addEventListener("input", function () {
+          calculateChange();
+        });
+
+        // Event listener untuk pencarian riwayat
+        document.getElementById("search-history").addEventListener("input", function () {
+          renderTransactionHistory(this.value.toLowerCase());
+        });
       });
+
+      // Fungsi Render Informasi Toko
+      function renderStoreInfo() {
+        document.getElementById("receipt-store-name").textContent = storeInfo.name;
+        document.getElementById("receipt-store-address").textContent = storeInfo.address;
+        document.getElementById("receipt-store-phone").textContent = "Telp: " + storeInfo.phone;
+        document.getElementById("receipt-cashier").textContent = "Kasir: " + storeInfo.cashier;
+      }
 
       // Fungsi Inisialisasi Scanner
       function initScanner() {
@@ -928,13 +1465,19 @@
             <td>${item.nama}</td>
             <td>Rp ${formatNumber(item.harga)}</td>
             <td>
-              <button class="action-btn" onclick="updateQty(${index}, -1)"><i class="fas fa-minus"></i></button>
+              <button class="action-btn" onclick="updateQty(${index}, -1)" title="Kurangi">
+                <i class="fas fa-minus"></i>
+              </button>
               ${item.qty}
-              <button class="action-btn" onclick="updateQty(${index}, 1)"><i class="fas fa-plus"></i></button>
+              <button class="action-btn" onclick="updateQty(${index}, 1)" title="Tambah">
+                <i class="fas fa-plus"></i>
+              </button>
             </td>
             <td>Rp ${formatNumber(subtotal)}</td>
             <td>
-              <button class="action-btn delete" onclick="hapusItemKeranjang(${index})"><i class="fas fa-trash"></i></button>
+              <button class="action-btn delete" onclick="hapusItemKeranjang(${index})" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
             </td>
           </tr>
         `;
@@ -981,12 +1524,18 @@
           return;
         }
 
-        if (confirm("Apakah Anda yakin ingin mengosongkan keranjang?")) {
-          keranjang = [];
-          localStorage.setItem("keranjangUMKM", JSON.stringify(keranjang));
-          renderKeranjang();
-          showSuccessAlert("Keranjang telah dikosongkan");
-        }
+        showConfirm(
+          "Konfirmasi",
+          "Apakah Anda yakin ingin mengosongkan keranjang?",
+          function (confirmed) {
+            if (confirmed) {
+              keranjang = [];
+              localStorage.setItem("keranjangUMKM", JSON.stringify(keranjang));
+              renderKeranjang();
+              showSuccessAlert("Keranjang telah dikosongkan");
+            }
+          }
+        );
       }
 
       // Fungsi Update Total
@@ -995,28 +1544,17 @@
           (sum, item) => sum + item.harga * item.qty,
           0
         );
-        let diskon =
-          parseInt(document.getElementById("diskon-input").value) || 0;
+        let diskon = parseInt(document.getElementById("diskon-input").value) || 0;
         let pajak = Math.round(subtotal * 0.1); // Pajak 10%
         let total = subtotal - diskon + pajak;
 
-        document.getElementById(
-          "subtotal-harga"
-        ).textContent = `Rp ${formatNumber(subtotal)}`;
-        document.getElementById(
-          "diskon-harga"
-        ).textContent = `Rp ${formatNumber(diskon)}`;
-        document.getElementById("pajak-harga").textContent = `Rp ${formatNumber(
-          pajak
-        )}`;
-        document.getElementById("total-harga").textContent = `Rp ${formatNumber(
-          total
-        )}`;
+        document.getElementById("subtotal-harga").textContent = `Rp ${formatNumber(subtotal)}`;
+        document.getElementById("diskon-harga").textContent = `Rp ${formatNumber(diskon)}`;
+        document.getElementById("pajak-harga").textContent = `Rp ${formatNumber(pajak)}`;
+        document.getElementById("total-harga").textContent = `Rp ${formatNumber(total)}`;
 
         // Update juga di modal pembayaran
-        document.getElementById("modal-total").textContent = `Rp ${formatNumber(
-          total
-        )}`;
+        document.getElementById("modal-total").textContent = `Rp ${formatNumber(total)}`;
       }
 
       // Fungsi Simpan Produk Baru
@@ -1047,15 +1585,18 @@
         document.getElementById("stok-input").value = "1";
 
         renderDaftarProduk();
-        showSuccessAlert(
-          "Produk baru berhasil disimpan dan ditambahkan ke keranjang"
-        );
+        showSuccessAlert("Produk baru berhasil disimpan dan ditambahkan ke keranjang");
       }
 
       // Fungsi Render Daftar Produk
       function renderDaftarProduk(filter = "") {
         let tbody = document.getElementById("produk-body");
+        let lowStockTbody = document.getElementById("low-stock-body");
+        let outOfStockTbody = document.getElementById("out-of-stock-body");
+        
         tbody.innerHTML = "";
+        lowStockTbody.innerHTML = "";
+        outOfStockTbody.innerHTML = "";
 
         let filteredProduk = daftarProduk;
         if (filter) {
@@ -1068,38 +1609,114 @@
 
         if (filteredProduk.length === 0) {
           tbody.innerHTML = `<tr><td colspan="5" class="text-center">Tidak ada produk ditemukan</td></tr>`;
+          lowStockTbody.innerHTML = `<tr><td colspan="5" class="text-center">Tidak ada produk stok rendah</td></tr>`;
+          outOfStockTbody.innerHTML = `<tr><td colspan="5" class="text-center">Tidak ada produk stok habis</td></tr>`;
           return;
         }
 
         filteredProduk.forEach((produk, index) => {
-          tbody.innerHTML += `
+          const row = `
           <tr>
             <td>${produk.kode}</td>
             <td>${produk.nama}</td>
             <td>Rp ${formatNumber(produk.harga)}</td>
-            <td>${produk.stok}</td>
+            <td class="${produk.stok <= 0 ? 'low-stock' : produk.stok <= 5 ? 'low-stock' : ''}">
+              ${produk.stok} ${produk.stok <= 5 ? '<span class="badge badge-warning">Rendah</span>' : ''}
+            </td>
             <td>
-              <button class="action-btn" onclick="editProduk(${index})"><i class="fas fa-edit"></i></button>
-              <button class="action-btn delete" onclick="hapusProduk(${index})"><i class="fas fa-trash"></i></button>
-              <button class="action-btn" onclick="tambahKeKeranjang(daftarProduk[${index}])"><i class="fas fa-cart-plus"></i></button>
+              <button class="action-btn edit" onclick="editProduk(${index})" title="Edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn delete" onclick="hapusProduk(${index})" title="Hapus">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="action-btn" onclick="tambahKeKeranjang(daftarProduk[${index}])" title="Tambah ke Keranjang">
+                <i class="fas fa-cart-plus"></i>
+              </button>
             </td>
           </tr>
         `;
+          
+          tbody.innerHTML += row;
+          
+          // Tambahkan ke tab stok rendah jika stok <= 5
+          if (produk.stok > 0 && produk.stok <= 5) {
+            lowStockTbody.innerHTML += row;
+          }
+          
+          // Tambahkan ke tab stok habis jika stok = 0
+          if (produk.stok <= 0) {
+            outOfStockTbody.innerHTML += row;
+          }
         });
+
+        // Tambahkan pesan jika tidak ada item di tab tertentu
+        if (lowStockTbody.innerHTML === "") {
+          lowStockTbody.innerHTML = `<tr><td colspan="5" class="text-center">Tidak ada produk stok rendah</td></tr>`;
+        }
+        
+        if (outOfStockTbody.innerHTML === "") {
+          outOfStockTbody.innerHTML = `<tr><td colspan="5" class="text-center">Tidak ada produk stok habis</td></tr>`;
+        }
+      }
+
+      // Fungsi Ganti Tab
+      function changeTab(tabId) {
+        // Sembunyikan semua konten tab
+        document.querySelectorAll(".tab-content").forEach(tab => {
+          tab.classList.remove("active");
+        });
+        
+        // Tampilkan konten tab yang dipilih
+        document.getElementById(tabId).classList.add("active");
+        
+        // Update tab aktif
+        document.querySelectorAll(".tabs .tab").forEach(tab => {
+          tab.classList.remove("active");
+        });
+        
+        event.currentTarget.classList.add("active");
+      }
+
+      // Fungsi Ganti Tab Riwayat
+      function changeHistoryTab(tabId) {
+        // Sembunyikan semua konten tab
+        document.querySelectorAll("#historyModal .tab-content").forEach(tab => {
+          tab.classList.remove("active");
+        });
+        
+        // Tampilkan konten tab yang dipilih
+        document.getElementById(tabId).classList.add("active");
+        
+        // Update tab aktif
+        document.querySelectorAll("#historyModal .tabs .tab").forEach(tab => {
+          tab.classList.remove("active");
+        });
+        
+        event.currentTarget.classList.add("active");
+        
+        // Render ulang tab yang dipilih
+        if (tabId === "today-history") {
+          renderTodayTransactionHistory();
+        } else {
+          renderTransactionHistory();
+        }
       }
 
       // Fungsi Hapus Produk
       function hapusProduk(index) {
-        if (
-          confirm(
-            `Apakah Anda yakin ingin menghapus produk ${daftarProduk[index].nama}?`
-          )
-        ) {
-          daftarProduk.splice(index, 1);
-          localStorage.setItem("produkUMKM", JSON.stringify(daftarProduk));
-          renderDaftarProduk();
-          showSuccessAlert("Produk berhasil dihapus");
-        }
+        showConfirm(
+          "Konfirmasi Hapus",
+          `Apakah Anda yakin ingin menghapus produk ${daftarProduk[index].nama}?`,
+          function (confirmed) {
+            if (confirmed) {
+              daftarProduk.splice(index, 1);
+              localStorage.setItem("produkUMKM", JSON.stringify(daftarProduk));
+              renderDaftarProduk();
+              showSuccessAlert("Produk berhasil dihapus");
+            }
+          }
+        );
       }
 
       // Fungsi Edit Produk
@@ -1116,14 +1733,33 @@
         document.getElementById("addProductModal").dataset.editingIndex = index;
       }
 
+      // Fungsi Buka Modal Tambah Produk
+      function openAddProductModal() {
+        // Reset form
+        document.getElementById("new-barcode").value = "";
+        document.getElementById("new-nama").value = "";
+        document.getElementById("new-harga").value = "";
+        document.getElementById("new-stok").value = "1";
+        
+        // Hapus editing index jika ada
+        delete document.getElementById("addProductModal").dataset.editingIndex;
+        
+        document.getElementById("addProductModal").style.display = "block";
+        document.getElementById("new-barcode").focus();
+      }
+
+      // Fungsi Tutup Modal Tambah Produk
+      function closeAddProductModal() {
+        document.getElementById("addProductModal").style.display = "none";
+      }
+
       // Fungsi Tambah Produk Baru via Modal
       function tambahProdukBaru() {
         const kode = document.getElementById("new-barcode").value.trim();
         const nama = document.getElementById("new-nama").value.trim();
         const harga = parseInt(document.getElementById("new-harga").value);
         const stok = parseInt(document.getElementById("new-stok").value) || 0;
-        const editingIndex =
-          document.getElementById("addProductModal").dataset.editingIndex;
+        const editingIndex = document.getElementById("addProductModal").dataset.editingIndex;
 
         if (!kode || !nama || !harga) {
           showErrorAlert("Harap isi semua field yang diperlukan");
@@ -1138,8 +1774,7 @@
         if (editingIndex !== undefined) {
           // Update produk yang sudah ada
           daftarProduk[editingIndex] = { kode, nama, harga, stok };
-          delete document.getElementById("addProductModal").dataset
-            .editingIndex;
+          delete document.getElementById("addProductModal").dataset.editingIndex;
         } else {
           // Tambah produk baru
           // Cek apakah barcode sudah ada
@@ -1186,8 +1821,7 @@
       // Fungsi Hitung Kembalian
       function calculateChange() {
         const total = getTotalBelanja();
-        const amountPaid =
-          parseInt(document.getElementById("amount-paid").value) || 0;
+        const amountPaid = parseInt(document.getElementById("amount-paid").value) || 0;
         const change = amountPaid - total;
 
         document.getElementById("kembalian").textContent = `Rp ${formatNumber(
@@ -1201,8 +1835,7 @@
           (sum, item) => sum + item.harga * item.qty,
           0
         );
-        let diskon =
-          parseInt(document.getElementById("diskon-input").value) || 0;
+        let diskon = parseInt(document.getElementById("diskon-input").value) || 0;
         let pajak = Math.round(subtotal * 0.1); // Pajak 10%
         return subtotal - diskon + pajak;
       }
@@ -1210,12 +1843,9 @@
       // Fungsi Proses Pembayaran
       function processPayment() {
         const total = getTotalBelanja();
-        const amountPaid =
-          parseInt(document.getElementById("amount-paid").value) || 0;
+        const amountPaid = parseInt(document.getElementById("amount-paid").value) || 0;
         const paymentMethod = document.getElementById("payment-method").value;
-        const customerName = document
-          .getElementById("customer-name")
-          .value.trim();
+        const customerName = document.getElementById("customer-name").value.trim();
 
         if (amountPaid < total) {
           showErrorAlert("Jumlah pembayaran kurang");
@@ -1234,13 +1864,13 @@
           ),
           diskon: parseInt(document.getElementById("diskon-input").value) || 0,
           pajak: Math.round(
-            keranjang.reduce((sum, item) => sum + item.harga * item.qty, 0) *
-              0.1
+            keranjang.reduce((sum, item) => sum + item.harga * item.qty, 0) * 0.1
           ),
           total,
           amountPaid,
           paymentMethod,
           customerName,
+          cashier: storeInfo.cashier
         };
 
         // Kurangi stok produk
@@ -1279,14 +1909,17 @@
 
       // Fungsi Tampilkan Struk
       function showReceipt(transaction) {
+        currentTransaction = transaction;
+        
         // Set data struk
         const now = new Date(transaction.date);
-        document.getElementById(
-          "receipt-date"
-        ).textContent = `Tanggal: ${formatDate(now)} ${formatTime(now)}`;
-        document.getElementById(
-          "receipt-transaction"
-        ).textContent = `No. Transaksi: ${transaction.id}`;
+        document.getElementById("receipt-date").textContent = `Tanggal: ${formatDate(now)} ${formatTime(now)}`;
+        document.getElementById("receipt-transaction").textContent = `No. Transaksi: ${transaction.id}`;
+        
+        // Set nama pelanggan jika ada
+        document.getElementById("receipt-customer").textContent = transaction.customerName 
+          ? `Pelanggan: ${transaction.customerName}` 
+          : "Pelanggan: -";
 
         // Set items
         const receiptItems = document.querySelector("#receipt-items tbody");
@@ -1304,24 +1937,12 @@
         });
 
         // Set total
-        document.getElementById(
-          "receipt-subtotal"
-        ).textContent = `Rp ${formatNumber(transaction.subtotal)}`;
-        document.getElementById(
-          "receipt-diskon"
-        ).textContent = `Rp ${formatNumber(transaction.diskon)}`;
-        document.getElementById(
-          "receipt-pajak"
-        ).textContent = `Rp ${formatNumber(transaction.pajak)}`;
-        document.getElementById(
-          "receipt-total"
-        ).textContent = `Rp ${formatNumber(transaction.total)}`;
-        document.getElementById(
-          "receipt-paid"
-        ).textContent = `Rp ${formatNumber(transaction.amountPaid)}`;
-        document.getElementById(
-          "receipt-change"
-        ).textContent = `Rp ${formatNumber(
+        document.getElementById("receipt-subtotal").textContent = `Rp ${formatNumber(transaction.subtotal)}`;
+        document.getElementById("receipt-diskon").textContent = `Rp ${formatNumber(transaction.diskon)}`;
+        document.getElementById("receipt-pajak").textContent = `Rp ${formatNumber(transaction.pajak)}`;
+        document.getElementById("receipt-total").textContent = `Rp ${formatNumber(transaction.total)}`;
+        document.getElementById("receipt-paid").textContent = `Rp ${formatNumber(transaction.amountPaid)}`;
+        document.getElementById("receipt-change").textContent = `Rp ${formatNumber(
           transaction.amountPaid - transaction.total
         )}`;
 
@@ -1355,11 +1976,7 @@
         document.getElementById("receiptModal").style.display = "block";
       }
 
-      // Fungsi Tutup Modal Struk
-      function closeReceiptModal() {
-        document.getElementById("receiptModal").style.display = "none";
-      }
-
+      // Fungsi Cetak Struk
       function printReceipt() {
         const receipt = document.getElementById("receipt-print");
         if (!receipt) {
@@ -1447,6 +2064,334 @@
         printWindow.document.close();
       }
 
+      // Fungsi Tutup Modal Struk
+      function closeReceiptModal() {
+        document.getElementById("receiptModal").style.display = "none";
+      }
+
+      // Fungsi Tampilkan Riwayat Transaksi
+      function showTransactionHistory() {
+        document.getElementById("historyModal").style.display = "block";
+        renderTransactionHistory();
+      }
+
+      // Fungsi Tutup Modal Riwayat
+      function closeHistoryModal() {
+        document.getElementById("historyModal").style.display = "none";
+      }
+
+      // Fungsi Render Riwayat Transaksi
+      function renderTransactionHistory(filter = "") {
+        let tbody = document.getElementById("history-body");
+        tbody.innerHTML = "";
+
+        let filteredTransactions = transactions;
+        if (filter) {
+          filteredTransactions = transactions.filter(
+            (t) =>
+              t.id.toLowerCase().includes(filter) ||
+              (t.customerName && t.customerName.toLowerCase().includes(filter)) ||
+              t.items.some(item => item.nama.toLowerCase().includes(filter))
+          );
+        }
+
+        if (filteredTransactions.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center">Tidak ada transaksi ditemukan</td></tr>`;
+          updateHistorySummary([], filter);
+          return;
+        }
+
+        filteredTransactions.forEach((transaction) => {
+          const date = new Date(transaction.date);
+          tbody.innerHTML += `
+          <tr>
+            <td>${transaction.id}</td>
+            <td>${formatDate(date)}<br>${formatTime(date)}</td>
+            <td>${transaction.items.length} item(s)</td>
+            <td>Rp ${formatNumber(transaction.total)}</td>
+            <td>${getPaymentMethodName(transaction.paymentMethod)}</td>
+            <td>
+              <button class="action-btn" onclick="showDetailTransaction('${transaction.id}')" title="Detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="action-btn" onclick="printTransactionReceipt('${transaction.id}')" title="Cetak Ulang">
+                <i class="fas fa-print"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+        });
+
+        updateHistorySummary(filteredTransactions, filter);
+      }
+
+      // Fungsi Render Riwayat Transaksi Hari Ini
+      function renderTodayTransactionHistory() {
+        let tbody = document.getElementById("today-history-body");
+        tbody.innerHTML = "";
+
+        const today = new Date();
+        const todayStr = formatDate(today);
+        
+        const todayTransactions = transactions.filter(t => {
+          const transDate = new Date(t.date);
+          return formatDate(transDate) === todayStr;
+        });
+
+        if (todayTransactions.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center">Tidak ada transaksi hari ini</td></tr>`;
+          updateHistorySummary([], "", true);
+          return;
+        }
+
+        todayTransactions.forEach((transaction) => {
+          const date = new Date(transaction.date);
+          tbody.innerHTML += `
+          <tr>
+            <td>${transaction.id}</td>
+            <td>${formatTime(date)}</td>
+            <td>${transaction.items.length} item(s)</td>
+            <td>Rp ${formatNumber(transaction.total)}</td>
+            <td>${getPaymentMethodName(transaction.paymentMethod)}</td>
+            <td>
+              <button class="action-btn" onclick="showDetailTransaction('${transaction.id}')" title="Detail">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="action-btn" onclick="printTransactionReceipt('${transaction.id}')" title="Cetak Ulang">
+                <i class="fas fa-print"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+        });
+
+        updateHistorySummary(todayTransactions, "", true);
+      }
+
+      // Fungsi Update Ringkasan Riwayat
+      function updateHistorySummary(transactionsList, filter = "", isToday = false) {
+        const totalTransactions = transactionsList.length;
+        const totalIncome = transactionsList.reduce((sum, t) => sum + t.total, 0);
+        
+        document.getElementById("total-transactions").textContent = totalTransactions;
+        document.getElementById("total-income").textContent = `Rp ${formatNumber(totalIncome)}`;
+        
+        // Update judul berdasarkan filter
+        const title = isToday ? "Transaksi Hari Ini" : 
+                     filter ? `Hasil Pencarian: "${filter}"` : "Semua Transaksi";
+        document.querySelector("#historyModal .modal-header h2").innerHTML = 
+          `<i class="fas fa-history"></i> Riwayat ${title}`;
+      }
+
+      // Fungsi Tampilkan Detail Transaksi
+      function showDetailTransaction(transactionId) {
+        const transaction = transactions.find(t => t.id === transactionId);
+        if (!transaction) {
+          showErrorAlert("Transaksi tidak ditemukan");
+          return;
+        }
+        
+        currentTransaction = transaction;
+        
+        const date = new Date(transaction.date);
+        document.getElementById("detail-id").textContent = transaction.id;
+        document.getElementById("detail-date").textContent = `${formatDate(date)} ${formatTime(date)}`;
+        document.getElementById("detail-customer").textContent = transaction.customerName || "-";
+        document.getElementById("detail-method").textContent = getPaymentMethodName(transaction.paymentMethod);
+        
+        // Render items
+        const itemsTbody = document.getElementById("detail-items");
+        itemsTbody.innerHTML = "";
+        transaction.items.forEach(item => {
+          const subtotal = item.harga * item.qty;
+          itemsTbody.innerHTML += `
+            <tr>
+              <td>${item.nama}</td>
+              <td>${item.qty}</td>
+              <td>Rp ${formatNumber(item.harga)}</td>
+              <td>Rp ${formatNumber(subtotal)}</td>
+            </tr>
+          `;
+        });
+        
+        // Update totals
+        document.getElementById("detail-subtotal").textContent = `Rp ${formatNumber(transaction.subtotal)}`;
+        document.getElementById("detail-diskon").textContent = `Rp ${formatNumber(transaction.diskon)}`;
+        document.getElementById("detail-pajak").textContent = `Rp ${formatNumber(transaction.pajak)}`;
+        document.getElementById("detail-total").textContent = `Rp ${formatNumber(transaction.total)}`;
+        document.getElementById("detail-paid").textContent = `Rp ${formatNumber(transaction.amountPaid)}`;
+        document.getElementById("detail-change").textContent = `Rp ${formatNumber(transaction.amountPaid - transaction.total)}`;
+        
+        // Tampilkan modal
+        document.getElementById("detailModal").style.display = "block";
+      }
+
+      // Fungsi Tutup Modal Detail
+      function closeDetailModal() {
+        document.getElementById("detailModal").style.display = "none";
+      }
+
+      // Fungsi Cetak Ulang Struk Transaksi
+      function printTransactionReceipt(transactionId) {
+        const transaction = transactions.find(t => t.id === transactionId);
+        if (!transaction) {
+          showErrorAlert("Transaksi tidak ditemukan");
+          return;
+        }
+        
+        currentTransaction = transaction;
+        showReceipt(transaction);
+      }
+
+      // Fungsi Cetak Struk dari Modal Detail
+      function printDetailReceipt() {
+        if (!currentTransaction) return;
+        showReceipt(currentTransaction);
+        closeDetailModal();
+      }
+
+      // Fungsi Backup Data
+      function backupData() {
+        document.getElementById("backupModal").style.display = "block";
+      }
+
+      // Fungsi Tutup Modal Backup
+      function closeBackupModal() {
+        document.getElementById("backupModal").style.display = "none";
+      }
+
+      // Fungsi Ekspor Data
+      function exportData() {
+        const data = {
+          produk: daftarProduk,
+          transaksi: transactions,
+          infoToko: storeInfo
+        };
+        
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        
+        const exportName = `backup-kasir-umkm_${formatDate(new Date())}.json`;
+        
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportName);
+        linkElement.click();
+        
+        showSuccessAlert("Data berhasil di-ekspor");
+      }
+
+      // Fungsi Impor Data
+      function importData() {
+        const fileInput = document.getElementById("import-file");
+        const file = fileInput.files[0];
+        
+        if (!file) {
+          showErrorAlert("Pilih file backup terlebih dahulu");
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const data = JSON.parse(e.target.result);
+            
+            showConfirm(
+              "Konfirmasi Impor Data",
+              "Apakah Anda yakin ingin mengimpor data ini? Data saat ini akan diganti.",
+              function(confirmed) {
+                if (confirmed) {
+                  // Validasi data
+                  if (!data.produk || !data.transaksi || !data.infoToko) {
+                    showErrorAlert("Format file backup tidak valid");
+                    return;
+                  }
+                  
+                  daftarProduk = data.produk;
+                  transactions = data.transaksi;
+                  storeInfo = data.infoToko;
+                  
+                  localStorage.setItem("produkUMKM", JSON.stringify(daftarProduk));
+                  localStorage.setItem("transaksiUMKM", JSON.stringify(transactions));
+                  localStorage.setItem("storeInfoUMKM", JSON.stringify(storeInfo));
+                  
+                  renderDaftarProduk();
+                  renderStoreInfo();
+                  showSuccessAlert("Data berhasil diimpor");
+                  closeBackupModal();
+                }
+              }
+            );
+          } catch (error) {
+            showErrorAlert("Gagal membaca file backup: " + error.message);
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      // Fungsi Konfirmasi Reset Data
+      function confirmResetData() {
+        showConfirm(
+          "Konfirmasi Reset Data",
+          "Apakah Anda yakin ingin mereset semua data? Semua produk, transaksi, dan pengaturan akan dihapus permanen.",
+          function(confirmed) {
+            if (confirmed) {
+              resetAllData();
+            }
+          }
+        );
+      }
+
+      // Fungsi Reset Semua Data
+      function resetAllData() {
+        daftarProduk = [];
+        keranjang = [];
+        transactions = [];
+        storeInfo = {
+          name: "Toko UMKM FYN",
+          address: "Jl. Gatot Subroto No. 12, Medan",
+          phone: "081269441924",
+          cashier: "Admin"
+        };
+        
+        localStorage.setItem("produkUMKM", JSON.stringify(daftarProduk));
+        localStorage.setItem("keranjangUMKM", JSON.stringify(keranjang));
+        localStorage.setItem("transaksiUMKM", JSON.stringify(transactions));
+        localStorage.setItem("storeInfoUMKM", JSON.stringify(storeInfo));
+        
+        renderDaftarProduk();
+        renderKeranjang();
+        renderStoreInfo();
+        closeBackupModal();
+        
+        showSuccessAlert("Semua data telah direset ke kondisi awal");
+      }
+
+      // Fungsi Tampilkan Modal Konfirmasi
+      function showConfirm(title, message, callback) {
+        document.getElementById("confirm-title").innerHTML = `<i class="fas fa-exclamation-circle"></i> ${title}`;
+        document.getElementById("confirm-message").textContent = message;
+        document.getElementById("confirmModal").style.display = "block";
+        
+        // Simpan callback di dataset modal
+        document.getElementById("confirmModal").dataset.callback = callback.toString();
+      }
+
+      // Fungsi Tutup Modal Konfirmasi
+      function closeConfirmModal() {
+        document.getElementById("confirmModal").style.display = "none";
+      }
+
+      // Fungsi Aksi Konfirmasi
+      function confirmAction(confirmed) {
+        const callbackStr = document.getElementById("confirmModal").dataset.callback;
+        if (callbackStr) {
+          const callback = new Function('confirmed', callbackStr);
+          callback(confirmed);
+        }
+        closeConfirmModal();
+      }
+
       // Fungsi Format Angka
       function formatNumber(num) {
         return new Intl.NumberFormat("id-ID").format(num);
@@ -1466,6 +2411,19 @@
           second: "2-digit",
         };
         return date.toLocaleTimeString("id-ID", options);
+      }
+
+      // Fungsi Get Nama Metode Pembayaran
+      function getPaymentMethodName(method) {
+        switch (method) {
+          case "cash": return "Tunai";
+          case "debit": return "Kartu Debit";
+          case "credit": return "Kartu Kredit";
+          case "qris": return "QRIS";
+          case "transfer": return "Transfer Bank";
+          case "ewallet": return "E-Wallet";
+          default: return "Tunai";
+        }
       }
 
       // Fungsi Tampilkan Alert Sukses
